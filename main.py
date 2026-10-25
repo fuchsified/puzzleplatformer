@@ -1,12 +1,13 @@
 # Python puzzle platformer
 import pygame
-from time import sleep
 
 pygame.init()
 
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
+
+PLAYER_SIZE = 50
 
 player_x = 100
 player_y = 100
@@ -17,6 +18,12 @@ velocity_y = 0
 jump_strength = -18
 on_ground = False
 
+platforms = [
+    pygame.Rect(0, 620, 1280, 100),
+    pygame.Rect(250, 500, 500, 40),
+    pygame.Rect(500, 350, 500, 40),
+]
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -25,6 +32,8 @@ while running:
     screen.fill((255, 255, 255))
 
     keys = pygame.key.get_pressed()
+
+    prev_bottom = player_y + PLAYER_SIZE
 
     if keys[pygame.K_a]:
         player_x -= player_speed
@@ -43,14 +52,21 @@ while running:
     velocity_y += gravity
     player_y += velocity_y
 
-    if player_y > 570:
-        player_y = 570
-        velocity_y = 0
-        on_ground = True
+    on_ground = False
+    for plat in platforms:
+        if (velocity_y >= 0
+                and player_x + PLAYER_SIZE > plat.left
+                and player_x < plat.right
+                and player_y + PLAYER_SIZE >= plat.top
+                and prev_bottom <= plat.top):
+            player_y = plat.top - PLAYER_SIZE
+            velocity_y = 0
+            on_ground = True
 
-
-    pygame.draw.rect(screen, (0, 200, 0), (0, 620, 1280, 720))
-    pygame.draw.rect(screen, (255, 0, 0), (player_x, player_y, 50, 50))
+    for plat in platforms:
+        color = (0, 200, 0) if plat.y == 620 else (0, 255, 0)
+        pygame.draw.rect(screen, color, plat)
+    pygame.draw.rect(screen, (255, 0, 0), (player_x, player_y, PLAYER_SIZE, PLAYER_SIZE))
 
     pygame.display.flip()
 
