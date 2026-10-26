@@ -19,9 +19,9 @@ jump_strength = -18
 on_ground = False
 
 platforms = [
-    pygame.Rect(0, 620, 1280, 100),
+    pygame.Rect(0, 620, 1300, 100),
     pygame.Rect(250, 500, 500, 40),
-    pygame.Rect(500, 350, 500, 40),
+    pygame.Rect(500, 400, 500, 40),
 ]
 
 while running:
@@ -62,6 +62,11 @@ while running:
             player_y = plat.top - PLAYER_SIZE
             velocity_y = 0
             on_ground = True
+
+    if player_x <= 0:
+        player_x = 1230
+    if player_x >= 1280:
+        player_x = 0
 
     for plat in platforms:
         color = (0, 200, 0) if plat.y == 620 else (0, 255, 0)
