@@ -20,8 +20,9 @@ on_ground = False
 
 platforms = [
     pygame.Rect(0, 620, 1300, 100),
-    pygame.Rect(250, 500, 500, 40),
-    pygame.Rect(500, 400, 500, 40),
+    pygame.Rect(250, 500, 250, 40),
+    pygame.Rect(500, 400, 250, 40),
+    pygame.Rect(75, 200, 100, 20)
 ]
 
 while running:
@@ -69,9 +70,9 @@ while running:
         player_x = 0
 
     for plat in platforms:
-        color = (0, 200, 0) if plat.y == 620 else (0, 255, 0)
+        color = (255, 0, 0) if plat.y == 620 else (0, 255, 0)
         pygame.draw.rect(screen, color, plat)
-    pygame.draw.rect(screen, (255, 0, 0), (player_x, player_y, PLAYER_SIZE, PLAYER_SIZE))
+    pygame.draw.rect(screen, (0, 0, 0), (player_x, player_y, PLAYER_SIZE, PLAYER_SIZE))
 
     pygame.display.flip()
 
