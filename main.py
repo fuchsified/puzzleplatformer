@@ -22,8 +22,18 @@ platforms = [
     pygame.Rect(0, 620, 1300, 100),
     pygame.Rect(250, 500, 250, 40),
     pygame.Rect(500, 400, 250, 40),
-    pygame.Rect(75, 200, 100, 20)
+    pygame.Rect(75, 200, 100, 20),
 ]
+
+lava = platforms[0]
+respawn_platform = platforms[3]
+
+
+def respawn():
+    x = respawn_platform.centerx - PLAYER_SIZE // 2
+    y = respawn_platform.top - PLAYER_SIZE
+    return x, y
+
 
 while running:
     for event in pygame.event.get():
@@ -60,6 +70,13 @@ while running:
                 and player_x < plat.right
                 and player_y + PLAYER_SIZE >= plat.top
                 and prev_bottom <= plat.top):
+
+            if plat is lava:
+                player_x, player_y = respawn()
+                velocity_y = 0
+                on_ground = True
+                break
+
             player_y = plat.top - PLAYER_SIZE
             velocity_y = 0
             on_ground = True
@@ -70,7 +87,7 @@ while running:
         player_x = 0
 
     for plat in platforms:
-        color = (255, 0, 0) if plat.y == 620 else (0, 255, 0)
+        color = (255, 0, 0) if plat is lava else (0, 255, 0)
         pygame.draw.rect(screen, color, plat)
     pygame.draw.rect(screen, (0, 0, 0), (player_x, player_y, PLAYER_SIZE, PLAYER_SIZE))
 
