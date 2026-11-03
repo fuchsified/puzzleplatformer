@@ -21,8 +21,11 @@ on_ground = False
 platforms = [
     pygame.Rect(0, 620, 1300, 100),
     pygame.Rect(250, 500, 250, 40),
-    pygame.Rect(500, 400, 250, 40),
+    pygame.Rect(500, 550, 250, 40),
     pygame.Rect(75, 200, 100, 20),
+    pygame.Rect(750, 400, 250, 40),
+    pygame.Rect(1000, 250, 250, 40),
+    pygame.Rect(500, 250, 250, 40)
 ]
 
 lava = platforms[0]
